@@ -9,6 +9,7 @@ const app = express();
 //Build Function Import 
 const createReadMe = require('../utl/create_file_func/create_readme');
 const buildExpressServer = require('../utl/create_file_func/express_server');
+const buildDgraphJSServer = require('../utl/create_file_func/dgraphjs_server');
 const parseClientQueries = require('../utl/create_file_func/client_queries');
 const parseClientMutations = require('../utl/create_file_func/client_mutations');
 const parseGraphqlServer = require('../utl/create_file_func/graphql_server');
@@ -56,7 +57,8 @@ app.post('/write-files', (req, res) => {
     buildClientQueries(data.data, dateStamp, () => {
       if (data.database === 'MongoDB') buildForMongo(data.data, dateStamp);
       if (data.database === 'MySQL') buildForMySQL(data.data, dateStamp);
-      if (data.database === 'PostgreSQL') buildForPostgreSQL(data.data, dateStamp);
+      if (data.database === 'PostgreSQL') buildForPostgreSQL(data.data, dateStamp);//
+      if (data.database === 'Dgraph') buildDgraphJSServer(data.data, dateStamp);
 
       sendResponse(dateStamp, res, () => {
         setTimeout(() => {

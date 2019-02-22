@@ -168,12 +168,19 @@ const TableOptions = ({
     <div id="fieldOptions">
       {selectedField.tableNum > -1 && (
         <div id="options" style={{ width: '250px' }}>
+        {database === 'Dgraph' ? 
+          <FlatButton
+            id="back-to-create"
+            label="Create Node"
+            icon={<KeyboardArrowLeft />}
+            onClick={openTableCreator}
+          /> : 
           <FlatButton
             id="back-to-create"
             label="Create Table"
             icon={<KeyboardArrowLeft />}
             onClick={openTableCreator}
-          />
+          />}
           <form style={{ width: '100%' }}>
             {fieldName(
               selectedField.fieldNum,
@@ -190,6 +197,17 @@ const TableOptions = ({
               value={selectedField.name}
               autoFocus
             />
+           { database !== 'Dgraph' ? <SelectField
+              floatingLabelText="Type"
+              fullWidth={true}
+              value={selectedField.type}
+              onChange={(e, i, value) => handleChange({ name: 'type', value })}
+            >
+              <MenuItem value="String" primaryText="String" />
+              <MenuItem value="Number" primaryText="Number" />
+              <MenuItem value="Boolean" primaryText="Boolean" />
+              <MenuItem value="ID" primaryText="ID" /> 
+            </SelectField> :
             <SelectField
               floatingLabelText="Type"
               fullWidth={true}
@@ -199,9 +217,28 @@ const TableOptions = ({
               <MenuItem value="String" primaryText="String" />
               <MenuItem value="Number" primaryText="Number" />
               <MenuItem value="Boolean" primaryText="Boolean" />
-              <MenuItem value="ID" primaryText="ID" />
-            </SelectField>
-
+              <MenuItem value="UID" primaryText="UID" />
+              <MenuItem value="Float" primaryText="float" />
+              <MenuItem value="password" primaryText="Password" />
+              <MenuItem value="dateTime" primaryText="dateTime" />
+              <MenuItem value="Geo" primaryText="Geo" />
+              <MenuItem value="ID" primaryText="UID" />
+            </SelectField>}
+            {database === 'Dgraph' ?
+            <SelectField
+            floatingLabelText="Indexing"
+            fullWidth={true}
+            value={selectedField.type}
+            onChange={(e, i, value) => handleChange({ name: 'defaultValue', value })}
+          >
+            <MenuItem value="hash" primaryText="Hash" />
+            <MenuItem value="exact" primaryText="Exact" />
+            <MenuItem value="term" primaryText="Term" />
+            <MenuItem value="fulltext" primaryText="Fulltext" />
+            <MenuItem value="trigram" primaryText="Trigram" />
+          </SelectField> : ``
+            }
+            {database !== 'Dgraph' ?
             <TextField
               hintText="Default Value"
               floatingLabelText="Default Value"
@@ -210,7 +247,7 @@ const TableOptions = ({
               name="defaultValue"
               onChange={e => handleChange({ name: e.target.name, value: e.target.value })}
               value={selectedField.defaultValue}
-            />
+            />: `` }
             {database !== 'MongoDB' && (
               <Toggle
                 label="Primary Key"

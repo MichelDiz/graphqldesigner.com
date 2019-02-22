@@ -51,6 +51,9 @@ if ( db === 'PostgreSQL' ) {
 if ( db === 'MySQL' ) {
     query += '\t\t"knex": "^0.15.2",\n\t\t"join-monster": "^2.1.0",\n\t\t"mysql": "^2.16.0"'
 }
+if ( db === 'Dgraph' ) {
+    query += '\t\t"dgraph-js": "^1.2.1",\n\t\t"grpc": "^1.9.0"'
+}
 query +=`
     }
 }

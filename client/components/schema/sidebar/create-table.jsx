@@ -91,7 +91,7 @@ const CreateTable = ({
     if (tableID >= 0) {
       return <h2>{tables[tableID].type} Table</h2>;
     }
-    return <h2>Create Table</h2>;
+    return database === 'Dgraph' ?  <h2>Create a Node</h2> : <h2>Create Table</h2>;
   }
 
   return (
@@ -99,15 +99,15 @@ const CreateTable = ({
       {tableID >= 0 && (
         <FlatButton
           id="back-to-create"
-          label="Create Table"
+          label={database === 'Dgraph' ? "Create Node" : "Create Table"}
           icon={<KeyboardArrowLeft />}
           onClick={openTableCreator}
         />
       )}
-      <form id="create-table-form" onSubmit={saveTableData}>
+    <form id="create-table-form" onSubmit={saveTableData}>
         {renderTableName()}
         <TextField
-          floatingLabelText="Table Name"
+          floatingLabelText={database === 'Dgraph' ? "Node Name" : "Table Name"}
           id="tableName"
           fullWidth={true}
           autoFocus
@@ -115,16 +115,25 @@ const CreateTable = ({
           value={tableName}
         />
         <h5 style={{ textAlign: 'center', marginTop: '-4px' }}>( Singular naming convention )</h5>
+        {database === 'Dgraph' ? 
         <Checkbox
           style={{ marginTop: '10px' }}
-          label="Unique ID"
+          label="Use Label/Kind"
           onCheck={() => idSelector()}
           id="idCheckbox"
           checked={!!selectedTable.fields[0]}
           disabled={database === 'MongoDB'}
-        />
+        /> : 
+        <Checkbox
+        style={{ marginTop: '10px' }}
+        label="Unique ID"
+        onCheck={() => idSelector()}
+        id="idCheckbox"
+        checked={!!selectedTable.fields[0]}
+        disabled={database === 'MongoDB'|| database === 'Dgraph'}
+        />}
         <RaisedButton
-          label={tableID >= 0 ? 'Update Table' : 'Create Table'}
+          label={tableID >= 0 ? database !== 'Dgraph' ?'Update Table' : 'Update Node' : database !== 'Dgraph' ? 'Create Table': 'Create Node'}
           fullWidth={true}
           secondary={true}
           type="submit"

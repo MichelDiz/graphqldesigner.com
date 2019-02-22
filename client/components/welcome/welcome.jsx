@@ -63,6 +63,7 @@ class Welcome extends React.Component {
             <img alt="" id="icon_graphql" src="./images/graphql.png" />
             <img alt="" id="icon_express" src="./images/express.png" />
             <img alt="" id="icon_react" src="./images/react.png" />
+            <img alt="" id="icon_react" src="./images/react.png" />
           </div>
           <hr className="welcome-hr" />
           <h4>Select your database type</h4>
@@ -75,6 +76,9 @@ class Welcome extends React.Component {
             </RaisedButton>
             <RaisedButton onClick={() => this.handleDatabaseClick('PostgreSQL')} buttonStyle={styles}>
               PostgreSQL
+            </RaisedButton>
+            <RaisedButton onClick={() => this.handleDatabaseClick('Dgraph')} buttonStyle={styles}>
+              Dgraph
             </RaisedButton>
           </div>
         </Dialog>

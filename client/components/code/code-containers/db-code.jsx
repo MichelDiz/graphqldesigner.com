@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import buildMySQLScripts from '../../../../utl/create_file_func/mysql_scripts';
 import buildMongoSchema from '../../../../utl/create_file_func/mongo_schema';
 import buildPostgreSQLScripts from '../../../../utl/create_file_func/postgresql_scripts';
+import buildDgraphScripts from '../../../../utl/create_file_func/dgraph_scripts';
 
 // Styling
 import '../code.css';
@@ -38,6 +39,10 @@ const CodeDBSQLContainer = ({ database, tables }) => {
     case 'MySQL':
       databaseCode = buildMySQLScripts(tables);
       header = 'MySQL Create Scripts';
+      break;
+    case 'Dgraph':
+      databaseCode = buildDgraphScripts(tables);
+      header = 'Dgraph Create Schema';
       break;
     default:
       break;
